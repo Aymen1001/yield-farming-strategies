@@ -1,0 +1,28 @@
+dotenv: .env
+
+wallets:
+  from_key: ${PRIVATE_KEY}
+
+dependencies:
+  - OpenZeppelin/openzeppelin-contracts@4.3.2
+
+compiler:
+  solc:
+    remappings:
+      - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.3.2"
+
+networks:
+  mainnet-fork:
+    uniswap-router: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+    comptroller: "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b"
+    dai-token: "0x6b175474e89094c44da98b954eedeac495271d0f"
+    weth-token: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+    cdai: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643"
+
+  mainnet-fork-dev:
+    uniswap-router: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+    comptroller: "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b"
+    dai-token: "0x6b175474e89094c44da98b954eedeac495271d0f"
+    weth-token: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+    cdai: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643"
+
