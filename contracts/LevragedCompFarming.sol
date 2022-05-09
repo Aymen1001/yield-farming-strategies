@@ -7,6 +7,9 @@ import "./compound/CTokenInterface.sol";
 import "./compound/IComptroller.sol";
 
 contract LeveragedCompFarming {
+    //--------------------------------------------------------------------
+    // VARIABLES
+    
     address public owner;
 
     // safety factor = 70 %
@@ -16,12 +19,18 @@ contract LeveragedCompFarming {
     CErc20 cDai;
     IERC20 dai;
     IComptroller comptroller;
-
+    
+    //--------------------------------------------------------------------
+    // MODIFIERS
+    
     modifier onlyOwner() {
         require(msg.sender == owner, "only owner call");
         _;
     }
 
+    //--------------------------------------------------------------------
+    // CONSTRUCTOR
+    
     constructor(
         address _daiAddress,
         address _cDaiAddress,
@@ -35,6 +44,9 @@ contract LeveragedCompFarming {
 
         cDaiAddress = _cDaiAddress;
     }
+    
+    //--------------------------------------------------------------------
+    // FUNCTIONS
 
     function deposit(uint256 _amount) public onlyOwner {
         dai.transferFrom(msg.sender, address(this), _amount);
@@ -48,10 +60,11 @@ contract LeveragedCompFarming {
         require(_amount > 0);
         dai.transferFrom(address(this), msg.sender, _amount);
     }
-
+    
+    // Used to supply DAI to Compound and then use the deposited amount to borrow more DAI, thus claiming twice the Comp APY.
+    // The process is repeated many times to maximize the return
     function startFarming(uint256 _amount) public onlyOwner {
         uint256 newCollateral = _amount;
-
         for (uint256 i = 0; i < 5; i++) {
             newCollateral = _supplyAndBorrow(newCollateral);
         }
